@@ -35,5 +35,17 @@ RSpec.describe 'Products API', type: :request do
         expect(json['data']['attributes']['name']).to eq Product.last.name
       end
     end
+
+    context 'when product does not exist' do
+      before { get "/products/0" }
+      it 'returns status code 404' do
+        expect(response).to have_http_status(404)
+      end
+
+      it 'returns the product' do
+        json = JSON.parse(response.body)
+        expect(json).to eq({})
+      end
+    end
   end
 end
