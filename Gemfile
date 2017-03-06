@@ -24,8 +24,14 @@ gem 'puma', '~> 3.0'
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors'
 
+# JSON API serializer
 gem 'active_model_serializers', '~> 0.10.4'
+
+# result pagination
 gem 'kaminari'
+
+# Search engine
+gem 'ransack', github: 'activerecord-hackery/ransack'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

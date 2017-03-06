@@ -7,7 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 Product.destroy_all
-30.times do
+200.times do
   Product.create do |p|
     p.name = Faker::Commerce.product_name
     p.sold_out = [true, false].sample

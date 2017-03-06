@@ -1,8 +1,10 @@
 class ProductsController < ApplicationController
 
   def index
-    @products = Product.page(1).per(10)
 
+    @search = Product.search(filter_params)
+    @search.sorts = 'id asc'
+    @products = @search.result.page(page_params[:number]).per(page_params[:size])
     render json: @products, status: :ok
   end
 
