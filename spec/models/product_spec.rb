@@ -5,6 +5,7 @@ RSpec.describe Product, type: :model do
   it do
     is_expected.to validate_inclusion_of(:category)
       .in_array(%w(markup tools brushes))
+      .allow_nil
   end
 
 end
