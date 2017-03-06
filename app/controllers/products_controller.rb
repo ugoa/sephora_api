@@ -9,6 +9,10 @@ class ProductsController < ApplicationController
   def show
     @product = Product.find_by(id: params[:id])
 
-    render json: @product, status: :ok
+    if @product
+      render json: @product, status: :ok
+    else
+      render json: {}, status: :not_found
+    end
   end
 end
