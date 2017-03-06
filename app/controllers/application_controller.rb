@@ -2,9 +2,8 @@ class ApplicationController < ActionController::API
   before_action :filter_params, :sort_params
 
   private
-
     def filter_params
-      @filter_params ||= params
+      @filter_params ||= params.except(:sort, :page)
     end
 
     def sort_params
@@ -21,5 +20,4 @@ class ApplicationController < ActionController::API
         size: params.dig('page', 'size') || 25,
       }
     end
-
 end
