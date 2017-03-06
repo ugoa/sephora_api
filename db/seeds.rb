@@ -5,3 +5,15 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+Product.destroy_all
+30.times do
+  Product.create do |p|
+    p.name = Faker::Commerce.product_name
+    p.sold_out = [true, false].sample
+    p.category = %w(markup tools brushes).sample
+    p.price = Faker::Number.between(1, 10_000)
+    p.under_sale = [true, false].sample
+    p.sale_price = Faker::Number.between(1, 10_000)
+  end
+end
