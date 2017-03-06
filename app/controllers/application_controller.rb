@@ -3,7 +3,8 @@ class ApplicationController < ActionController::API
 
   private
     def filter_params
-      @filter_params ||= params.except(:sort, :page)
+      return {} unless params[:filter]
+      @filter_params = params[:filter].to_unsafe_h || {}
     end
 
     def sort_params
