@@ -8,7 +8,11 @@ class ApplicationController < ActionController::API
     end
 
     def sort_params
-      # @sort_params ||= params[:sort].split(',')
+      # convert `sort=-price,name` in `params` to ['price desc', 'name asc']
+      return nil unless params[:sort]
+      @sort_params ||= params[:sort].delete('').split(',').map do |option|
+        option[0] == '-' ? "#{option[1..-1]} desc" : "#{option} asc"
+      end
     end
 
     def page_params
