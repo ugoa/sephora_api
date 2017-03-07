@@ -12,7 +12,7 @@ RSpec.describe 'Products API', type: :request do
       it 'returns products' do
         json = JSON.parse(response.body)
         expect(json).not_to be_empty
-        expect(json['data'].size).to eq 10
+        expect(json['data'].size).to eq 25
       end
 
       it 'returns status 200' do

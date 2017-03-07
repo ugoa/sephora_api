@@ -9,11 +9,12 @@
 Product.destroy_all
 200.times do
   Product.create do |p|
+    number = Faker::Number.between(1, 10_000)
     p.name = Faker::Commerce.product_name
     p.sold_out = [true, false].sample
     p.category = %w(markup tools brushes).sample
-    p.price = Faker::Number.between(1, 10_000)
+    p.price = number
     p.under_sale = [true, false].sample
-    p.sale_price = Faker::Number.between(1, 10_000)
+    p.sale_price = Faker::Number.between(1, number)
   end
 end
