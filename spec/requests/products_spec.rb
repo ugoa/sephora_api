@@ -1,6 +1,5 @@
 require 'rails_helper'
 
-
 RSpec.describe 'Products API', type: :request do
   let!(:products) { create_list(:product, 30) }
   let(:existing_id) { products.last.id }
@@ -17,6 +16,22 @@ RSpec.describe 'Products API', type: :request do
 
       it 'returns status 200' do
         expect(response).to have_http_status(200)
+      end
+    end
+
+    context 'no data' do
+      before {
+        Product.destroy_all
+        get '/products'
+      }
+
+      it 'returns empty results' do
+        json = JSON.parse(response.body)
+        expect(json['data'].size).to eq 0
+      end
+
+      it 'returns status 404' do
+        expect(response).to have_http_status(404)
       end
     end
   end

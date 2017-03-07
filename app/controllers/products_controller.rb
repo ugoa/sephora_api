@@ -5,7 +5,12 @@ class ProductsController < ApplicationController
     @q = Product.search(filter_params)
     @q.sorts = sort_params if sort_params
     @products = @q.result.page(page_params[:number]).per(page_params[:size])
-    render json: @products, status: :ok
+
+    if @products.empty?
+      render json: { data: [] }, status: :not_found
+    else
+      render json: @products, status: :ok
+    end
   end
 
   def show
