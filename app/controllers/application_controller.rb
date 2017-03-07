@@ -3,8 +3,14 @@ class ApplicationController < ActionController::API
 
   private
     def filter_params
-      return {} unless params[:filter]
-      @filter_params = params[:filter].to_unsafe_h || {}
+      return {} unless params[:filter] && params[:filter].respond_to?(:to_unsafe_h)
+      params_hash = params[:filter].to_unsafe_h
+      return {} if params_hash.empty?
+
+      params_hash.each do |k, v|
+        # Convert v as 'markup, brushes' to ['markup', 'brushes']
+        params_hash[k] = v.delete('').split(',') if k.end_with? '_in'
+      end
     end
 
     def sort_params
