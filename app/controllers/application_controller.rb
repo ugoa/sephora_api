@@ -9,14 +9,14 @@ class ApplicationController < ActionController::API
 
       params_hash.each do |k, v|
         # Convert v as 'markup, brushes' to ['markup', 'brushes']
-        params_hash[k] = v.delete('').split(',') if k.end_with? '_in'
+        params_hash[k] = v.delete(' ').split(',') if k.end_with? '_in'
       end
     end
 
     def sort_params
       # convert `sort=-price,name` in `params` to ['price desc', 'name asc']
       return nil unless params[:sort]
-      @sort_params ||= params[:sort].delete('').split(',').map do |option|
+      @sort_params ||= params[:sort].delete(' ').split(',').map do |option|
         option[0] == '-' ? "#{option[1..-1]} desc" : "#{option} asc"
       end
     end
