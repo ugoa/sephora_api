@@ -1,11 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe 'Products API', type: :request do
-  let!(:products) { create_list(:product, 30) }
-  let(:existing_id) { products.last.id }
 
   describe 'GET /products' do
+    context 'when price lower than 500' do
+      before { get '/products?filter[price_lt]=500' }
+    end
+
     context 'no params' do
+      let!(:products) { create_list(:product, 30) }
+      let(:existing_id) { products.last.id }
+
       before { get '/products' }
 
       it 'returns products' do
@@ -20,10 +25,7 @@ RSpec.describe 'Products API', type: :request do
     end
 
     context 'no data' do
-      before {
-        Product.destroy_all
-        get '/products'
-      }
+      before { get '/products' }
 
       it 'returns empty results' do
         json = JSON.parse(response.body)
@@ -37,6 +39,9 @@ RSpec.describe 'Products API', type: :request do
   end
 
   describe 'GET /products/:id' do
+    let!(:products) { create_list(:product, 30) }
+    let(:existing_id) { products.last.id }
+
     before { get "/products/#{existing_id}" }
 
     context 'when product exists' do
