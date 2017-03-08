@@ -231,7 +231,7 @@ RSpec.describe 'Products API', type: :request do
 
   describe 'Error handling' do
     before {
-      ProductQueryService.any_instance.stub(:call).and_raise('invalid params')
+      expect_any_instance_of(ProductQueryService).to receive(:call).and_raise('invalid params')
       get '/products'
     }
 
