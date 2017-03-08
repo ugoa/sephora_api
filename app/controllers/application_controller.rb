@@ -1,6 +1,12 @@
 class ApplicationController < ActionController::API
   before_action :filter_params, :sort_params
 
+  rescue_from Exception do |e|
+    render json: { errors: {
+      title: 'internal error occurs', detail: e, status: 500
+    } }
+  end
+
   private
 
     def filter_params
