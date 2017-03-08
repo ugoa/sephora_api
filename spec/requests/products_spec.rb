@@ -228,4 +228,21 @@ RSpec.describe 'Products API', type: :request do
       end
     end
   end
+
+  describe 'Error handling' do
+    before {
+      ProductQueryService.any_instance.stub(:call).and_raise('invalid params')
+      get '/products'
+    }
+
+    it "return 500 response" do
+        json = JSON.parse(response.body)
+        expect(json['data']).to eq nil
+        expect(json['errors']).not_to be_empty
+        expect(json['errors']['status']).to eq 500
+        expect(json['errors']['title']).to eq 'internal error occurs'
+        expect(json['errors']['detail']).to eq 'invalid params'
+    end
+  end
+
 end
