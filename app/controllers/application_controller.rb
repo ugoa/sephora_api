@@ -2,6 +2,7 @@ class ApplicationController < ActionController::API
   before_action :filter_params, :sort_params
 
   private
+
     def filter_params
       return {} unless params[:filter] && params[:filter].respond_to?(:to_unsafe_h)
       params_hash = params[:filter].to_unsafe_h
